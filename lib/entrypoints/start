@@ -8,13 +8,16 @@ fi
 PFX="$INSTANCE_PREFIX"/"$INSTANCE"
 cd -- "$PFX"
 
-tdm stop "$INSTANCE" || true
+tdm stop "$INSTANCE" 2>/dev/null || true
 
-PORT=$(grep rpc-port config/settings.json | awk '{print $2}' | tr -d ',')
 PUBIP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
+. "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
 
 mkconfig
 
-stunnel -o config/.stunnel.log -P config/.stunnel.pid -p config/stunnel.pem -d $PUBIP:$PORT -r $PORT
+stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
+    -p "$PFX"/config/stunnel.pem -d $PUBIP:$RPC_PORT -r $RPC_PORT
 
-exec transmission-daemon -g config
+# Important to have $PFX on this line, so we can find the process
+# later on.
+exec transmission-daemon -g "$PFX"/config -x "$PFX"/.pid
