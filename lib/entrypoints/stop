@@ -14,7 +14,7 @@ if [ ! -z "$PID" ]; then
   ps $PID
   kill $PID
 else
-  echo "No running daemon found"
+  echo "No running daemon found" >&2
 fi
 
 exit 0
