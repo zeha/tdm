@@ -33,6 +33,6 @@ mkconfig
 
 echo
 echo
-echo Use tdstart $INSTANCE to start this instance.
+echo Use tdm start $INSTANCE to start this instance.
 exit 0
 
