@@ -1,5 +1,5 @@
 #!/bin/bash
-SUBCOMMAND=$1
+SUBCOMMAND="$1"; shift
 if [ -z "$SUBCOMMAND" ]; then
   SUBCOMMAND=help
 fi

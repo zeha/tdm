@@ -1,5 +1,4 @@
-set -e
-INSTANCE="$2"
+INSTANCE="$1"; shift
 if [ -z "$INSTANCE" ]; then
   echo "usage: tdm stop INSTANCE"
   exit 1
