@@ -1,17 +1,21 @@
-INSTANCE="$1"; shift
+INSTANCE="$1"; shift || true
 if [ -z "$INSTANCE" ]; then
   echo "usage: tdm stop INSTANCE"
   exit 1
 fi
 PFX="$INSTANCE_PREFIX"/"$INSTANCE"
 cd -- $PFX
+
+# ignore errors
+set +e
+
 if [ -f config/.stunnel.pid ]; then
   kill $(cat config/.stunnel.pid)
 fi
 
 PID=$(pgrep -u $USER -f "$PFX"/config)
 if [ ! -z "$PID" ]; then
-  ps $PID
+  ps $PID || true
   kill $PID
 else
   echo "No running daemon found" >&2

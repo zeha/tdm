@@ -9,6 +9,7 @@ LIBDIR="$INSTALLDIR"/lib
 . "$INSTALLDIR"/config/tdm.sh
 
 if [ -r "$INSTALLDIR"/lib/commands/"$SUBCOMMAND" ]; then
+  set -e
   . "$INSTALLDIR"/lib/commands/"$SUBCOMMAND"
   echo "Subcommand $SUBCOMMAND did not exit properly."
   exit 99

@@ -1,4 +1,4 @@
-INSTANCE="$1"; shift
+INSTANCE="$1"; shift || true
 if [ -z "$INSTANCE" ]; then
   echo "usage: tdm done INSTANCE"
   exit 1

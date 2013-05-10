@@ -1,5 +1,5 @@
 . "$LIBDIR"/mkconfig
-INSTANCE="$1"; shift
+INSTANCE="$1"; shift || true
 if [ -z "$INSTANCE" ]; then
   echo "usage: tdm init INSTANCE"
   exit 1
