@@ -8,7 +8,7 @@ fi
 PFX="$INSTANCE_PREFIX"/$INSTANCE
 cd "$PFX"
 
-tdm stop "$INSTANCE"
+tdm stop "$INSTANCE" || true
 
 PORT=$(grep rpc-port config/settings.json | awk '{print $2}' | tr -d ',')
 PUBIP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
