@@ -26,6 +26,7 @@ installtpl() {
   fi
 }
 
+chmod 700 "$INSTALLDIR"/config
 installtpl "tdm.sh"
 installtpl "settings.json"
 
