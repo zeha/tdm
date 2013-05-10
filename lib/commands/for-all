@@ -1,0 +1,15 @@
+command=$1; shift || true
+if [ -z "$command" ]; then
+  echo "Usage: tdm for-all SUBCOMMAND [ARGS]"
+  exit 1
+fi
+rc=0
+for configname in "$INSTALLDIR"/config/cfg-*.sh; do
+  INSTANCE=$(basename "$configname" | sed -e 's/^cfg-//;s/\.sh$//;')
+  set +e
+  tdm "$command" "$INSTANCE" "$@"
+  if [ "$?" != "0" ]; then
+    rc=1
+  fi
+done
+exit $rc
