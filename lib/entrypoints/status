@@ -1,0 +1,18 @@
+set -e
+INSTANCE="$2"
+if [ -z "$INSTANCE" ]; then
+  PIDS=$(pgrep transmission-daemon || true)
+else
+  PFX="$INSTANCE_PREFIX"/$INSTANCE/config
+  if [ ! -d "$PFX" ]; then
+    echo "The instance $INSTANCE does not exist."
+    exit 1
+  fi
+  PIDS=$(pgrep -f "$PFX"/config || true)
+fi
+if [ -z "${PIDS}" ]; then
+  echo "No matching processes."
+  exit 1
+fi
+ps ${PIDS}
+exit 0
