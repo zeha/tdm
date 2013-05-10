@@ -6,4 +6,3 @@ fi
 
 echo $@ >> "$INSTANCE_PREFIX"/$INSTANCE/log
 exit 0
-

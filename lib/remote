@@ -1,0 +1,12 @@
+remote() {
+  . "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+  if [ -z "$RPC_PASSWORD_CLEAR" ]; then
+    echo -n "Enter RPC password: "
+    stty -echo
+    read RPC_PASSWORD_CLEAR
+    stty echo
+    echo
+  fi
+  export TR_AUTH="$RPC_USERNAME:$RPC_PASSWORD_CLEAR"
+  exec transmission-remote "http://localhost:$RPC_PORT/transmission" -ne "$@"
+}

@@ -1,13 +1,13 @@
 INSTANCE="$1"; shift
 if [ -z "$INSTANCE" ]; then
-  PIDS=$(pgrep transmission-daemon || true)
+  PIDS=$(pgrep -u $USER -f transmission-daemon || true)
 else
-  PFX="$INSTANCE_PREFIX"/$INSTANCE/config
+  PFX="$INSTANCE_PREFIX"/$INSTANCE
   if [ ! -d "$PFX" ]; then
     echo "The instance $INSTANCE does not exist."
     exit 1
   fi
-  PIDS=$(pgrep -f "$PFX"/config || true)
+  PIDS=$(pgrep -u $USER -f "$PFX"/config || true)
 fi
 if [ -z "${PIDS}" ]; then
   echo "No matching processes."

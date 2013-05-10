@@ -1,16 +1,11 @@
+. "$INSTALLDIR"/lib/remote
 INSTANCE="$1"; shift
 if [ -z "$INSTANCE" ]; then
   echo "usage: tdm do INSTANCE [-options]"
   exit 1
 fi
+PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+cd -- "$PFX"
 
-. "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
-if [ -z "$RPC_PASSWORD_CLEAR" ]; then
-  echo -n "Enter RPC password: "
-  stty -echo
-  read RPC_PASSWORD_CLEAR
-  stty echo
-  echo
-fi
-export TR_AUTH="$RPC_USERNAME:$RPC_PASSWORD_CLEAR"
-exec transmission-remote "http://localhost:$RPC_PORT/transmission" -ne $@
+remote "$@"
+exit $?

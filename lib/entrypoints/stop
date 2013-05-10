@@ -4,12 +4,12 @@ if [ -z "$INSTANCE" ]; then
   exit 1
 fi
 PFX="$INSTANCE_PREFIX"/"$INSTANCE"
-cd $PFX
-if [ -f $PFX/config/.stunnel.pid ]; then
-  kill $(cat $PFX/config/.stunnel.pid)
+cd -- $PFX
+if [ -f config/.stunnel.pid ]; then
+  kill $(cat config/.stunnel.pid)
 fi
 
-PID=$(pgrep -f $PFX/config)
+PID=$(pgrep -u $USER -f "$PFX"/config)
 if [ ! -z "$PID" ]; then
   ps $PID
   kill $PID
