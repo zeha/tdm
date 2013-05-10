@@ -1,0 +1,12 @@
+. "$INSTALLDIR"/lib/remote
+INSTANCE="$1"; shift
+URL="$1"; shift
+if [ -z "$INSTANCE" -o -z "$URL" ]; then
+  echo "usage: tdm add INSTANCE URL"
+  exit 1
+fi
+PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+cd -- "$PFX"
+
+remote -a "$URL"
+exit $?
