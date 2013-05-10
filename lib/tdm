@@ -1,0 +1,17 @@
+#!/bin/bash
+SUBCOMMAND=$1
+if [ -z "$SUBCOMMAND" ]; then
+  SUBCOMMAND=help
+fi
+
+BINDIR="$INSTALLDIR"/bin
+LIBDIR="$INSTALLDIR"/lib
+. "$INSTALLDIR"/config/tdm.sh
+
+if [ -r "$INSTALLDIR"/lib/entrypoints/"$SUBCOMMAND" ]; then
+  . "$INSTALLDIR"/lib/entrypoints/"$SUBCOMMAND"
+  echo "Subcommand $SUBCOMMAND did not exit properly."
+  exit 99
+fi
+echo "$SUBCOMMAND" is not a valid subcommand. Try "tdm help" for a list.
+exit 1

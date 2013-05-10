@@ -1,0 +1,3 @@
+echo "Commands:"
+ls -1 "$INSTALLDIR"/lib/entrypoints
+exit 0

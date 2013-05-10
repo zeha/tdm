@@ -1,0 +1,10 @@
+set -e
+INSTANCE=$2
+if [ -z "$INSTANCE" ]; then
+  echo "usage: tdm done INSTANCE"
+  exit 1
+fi
+
+echo $@ >> "$INSTANCE_PREFIX"/$INSTANCE/log
+exit 0
+

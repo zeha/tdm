@@ -1,0 +1,38 @@
+set -e
+. "$LIBDIR"/mkconfig
+INSTANCE="$2"
+if [ -z "$INSTANCE" ]; then
+  echo "usage: tdm init INSTANCE"
+  exit 1
+fi
+
+PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+if [ -d "$PFX" ]; then
+  echo "$PFX already exists, aborting"
+  exit 1
+fi
+
+mkdir "$PFX"
+mkdir "$PFX"/config
+mkdir "$PFX"/files
+mkdir "$PFX"/watch
+
+openssl req -new -x509 -days 365 -nodes -config /usr/share/doc/stunnel4/examples/stunnel.cnf -out "$PFX/config/stunnel.pem" -keyout "$PFX/config/stunnel.pem"
+openssl gendh 512 >> "$PFX/config/stunnel.pem"
+
+CFG="$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+
+cat > $CFG <<EOF
+# config for $INSTANCE
+PEER_PORT=8447
+RPC_PORT=7447
+SPEED_LIMIT=2000
+EOF
+
+mkconfig
+
+echo
+echo
+echo Use tdstart $INSTANCE to start this instance.
+exit 0
+

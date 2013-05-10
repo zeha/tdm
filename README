@@ -1,0 +1,11 @@
+Quickstart
+----------
+
+./bin/tdminstall
+rehash
+
+vim $INSTALLDIR/config/tdm.sh
+tdm init instance1
+vim $INSTALLDIR/config/cfg-instance1.sh
+tdm start instance1
+

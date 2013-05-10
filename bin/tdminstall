@@ -1,0 +1,33 @@
+#!/bin/bash
+if [ -f ~/bin/tdm ]; then
+  rm ~/bin/tdm
+fi
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=`dirname "$SCRIPT"`
+
+INSTALLDIR=$(readlink -f "$SCRIPTPATH"/..)
+echo Using "$INSTALLDIR" as install directory.
+echo Setting up ~/bin/tdm.
+
+cat <<EOF >~/bin/tdm 
+#!/bin/bash
+export INSTALLDIR="$INSTALLDIR"
+. \$INSTALLDIR/lib/tdm
+EOF
+chmod +x ~/bin/tdm
+
+installtpl() {
+  local name
+  name=$1
+  if [ ! -e "$INSTALLDIR"/config/${name} ]; then
+    echo Installing template ${name}
+    cp "$INSTALLDIR"/config/${name}.tpl "$INSTALLDIR"/config/${name}
+  fi
+}
+
+installtpl "tdm.sh"
+installtpl "settings.json"
+
+echo
+echo Now use tdm init foo to create an instance named "foo".
