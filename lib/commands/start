@@ -10,7 +10,7 @@ cd -- "$PFX"
 tdm stop "$INSTANCE" 2>/dev/null || true
 
 PUBIP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
-. "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+. "$PFX"/config/tdm.sh
 
 mkconfig
 

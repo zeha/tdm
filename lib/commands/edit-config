@@ -1,0 +1,10 @@
+INSTANCE="$1"; shift || true
+if [ -z "$INSTANCE" ]; then
+  echo "usage: tdm edit-config INSTANCE"
+  exit 1
+fi
+PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+cd -- "$PFX"
+
+[ -z "$EDITOR" ] && EDITOR=editor
+exec $EDITOR config/tdm.sh

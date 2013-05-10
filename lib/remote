@@ -1,5 +1,5 @@
 remote() {
-  . "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+  . "$INSTANCE_PREFIX"/"$INSTANCE"/config/tdm.sh
   if [ -z "$RPC_PASSWORD_CLEAR" ]; then
     echo -n "Enter RPC password: "
     stty -echo

@@ -6,5 +6,5 @@ RPC_PASSWORD="changeme"
 #RPC_PASSWORD_CLEAR="$RPC_PASSWORD"
 
 # Where instances go.
-INSTANCE_PREFIX=~
+INSTANCE_PREFIX=~/bt
 

@@ -20,7 +20,7 @@ chmod 700 "$PFX"/config
 openssl req -new -x509 -days 365 -nodes -config /usr/share/doc/stunnel4/examples/stunnel.cnf -out "$PFX/config/stunnel.pem" -keyout "$PFX/config/stunnel.pem"
 openssl gendh 512 >> "$PFX/config/stunnel.pem"
 
-CFG="$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+CFG="$PFX"/config/tdm.sh
 
 cat > $CFG <<EOF
 # config for $INSTANCE

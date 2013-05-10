@@ -1,19 +1,19 @@
 
 mkconfig() {
   local PFX
-PFX="$INSTANCE_PREFIX"/"$INSTANCE"
-. "$INSTALLDIR"/config/tdm.sh
-. "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+  PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+  . "$INSTALLDIR"/config/tdm.sh
+  . "$PFX"/config/tdm.sh
 
-sed -e "
-s|@PFX@|$PFX|g;
-s|@INSTANCE@|$INSTANCE|g;
-s|@BINDIR@|$BINDIR|g;
-s|@RPC_PORT@|$RPC_PORT|g;
-s|@PEER_PORT@|$PEER_PORT|g;
-s|@SPEED_LIMIT@|$SPEED_LIMIT|g;
-s|@RPC_USERNAME@|$RPC_USERNAME|g;
-s|@RPC_PASSWORD@|$RPC_PASSWORD|g;
-" < "$INSTALLDIR"/config/settings.json > $PFX/config/settings.json
+  sed -e "
+  s|@PFX@|$PFX|g;
+  s|@INSTANCE@|$INSTANCE|g;
+  s|@BINDIR@|$BINDIR|g;
+  s|@RPC_PORT@|$RPC_PORT|g;
+  s|@PEER_PORT@|$PEER_PORT|g;
+  s|@SPEED_LIMIT@|$SPEED_LIMIT|g;
+  s|@RPC_USERNAME@|$RPC_USERNAME|g;
+  s|@RPC_PASSWORD@|$RPC_PASSWORD|g;
+  " < "$INSTALLDIR"/config/settings.json > $PFX/config/settings.json
 }
 

@@ -4,8 +4,8 @@ if [ -z "$command" ]; then
   exit 1
 fi
 rc=0
-for configname in "$INSTALLDIR"/config/cfg-*.sh; do
-  INSTANCE=$(basename "$configname" | sed -e 's/^cfg-//;s/\.sh$//;')
+for configdir in "$INSTANCE_PREFIX"/*/config; do
+  INSTANCE=$(basename "${configdir%/config}")
   set +e
   tdm "$command" "$INSTANCE" "$@"
   if [ "$?" != "0" ]; then

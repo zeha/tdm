@@ -7,7 +7,7 @@ else
     echo "The instance $INSTANCE does not exist."
     exit 1
   fi
-  . "$INSTALLDIR"/config/cfg-"$INSTANCE".sh
+  . "$PFX"/config/tdm.sh
   echo "Instance $INSTANCE: peer port $PEER_PORT, RPC: http://localhost:$RPC_PORT/"
   PIDS=$(pgrep -u $USER -f "$PFX"/config || true)
 fi

@@ -10,6 +10,6 @@ rehash
 $EDITOR $INSTALLDIR/config/tdm.sh
 
 tdm init instance1
-$EDITOR $INSTALLDIR/config/cfg-instance1.sh
+tdm edit-config instance1
 tdm start instance1
 
