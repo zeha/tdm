@@ -1,4 +1,3 @@
-set -e
 . "$LIBDIR"/mkconfig
 INSTANCE="$1"; shift
 if [ -z "$INSTANCE" ]; then
