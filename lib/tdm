@@ -8,8 +8,8 @@ BINDIR="$INSTALLDIR"/bin
 LIBDIR="$INSTALLDIR"/lib
 . "$INSTALLDIR"/config/tdm.sh
 
-if [ -r "$INSTALLDIR"/lib/entrypoints/"$SUBCOMMAND" ]; then
-  . "$INSTALLDIR"/lib/entrypoints/"$SUBCOMMAND"
+if [ -r "$INSTALLDIR"/lib/commands/"$SUBCOMMAND" ]; then
+  . "$INSTALLDIR"/lib/commands/"$SUBCOMMAND"
   echo "Subcommand $SUBCOMMAND did not exit properly."
   exit 99
 fi

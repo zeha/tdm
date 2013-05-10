@@ -1,0 +1,3 @@
+echo "Commands:"
+ls -1 "$INSTALLDIR"/lib/commands
+exit 0
