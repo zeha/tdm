@@ -14,8 +14,10 @@ PUBIP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
 
 mkconfig
 
-stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
+if [ ! "$RPC_SSL" = "no" ]; then
+  stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
     -p "$PFX"/config/stunnel.pem -d $PUBIP:$RPC_PORT -r $RPC_PORT
+fi
 
 # Important to have $PFX on this line, so we can find the process
 # later on.
