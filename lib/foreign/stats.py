@@ -28,9 +28,12 @@ for line in lines:
 		torrent = {}
 	elif ': ' in line:
 		k, v = line.split(': ', 1)
-		k = k.strip()
-		k = k.replace(' ', '_').lower()
+		k = k.strip().replace(' ', '_').lower()
 		v = v.strip()
+		if v == 'None':
+			v = 0
+		elif v == 'Inf':
+			v = 9999
 		if k in ['date_added', 'date_finished', 'date_started', 'latest_activity']:
 			v = datetime.datetime.strptime(v, "%a %b %d %H:%M:%S %Y")
 		elif k in ['ratio']:
@@ -39,7 +42,7 @@ for line in lines:
 			url = urlparse.parse_qs(urlparse.urlparse(urlparse.urlparse(v).query.replace('btih:','btih/').replace('&','?',1)).query)['tr'][0]
 			torrent['_tracker'] = urlparse.urlparse(url).netloc.split(':')[0].split('.')[-2]
 		else:
-			v = v.decode('UTF-8')
+			v = str(v).decode('UTF-8')
 		torrent[k] = v
 
 def coldefs(names):
