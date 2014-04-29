@@ -5,6 +5,9 @@ import sys
 import argparse
 import sqlite3
 
+SIZE_NAMES = ['B', 'kB', 'MB', 'GB', 'TB', 'PB']
+DB_TYPES = {'ratio': 'NUMERIC', 'downloaded': 'INTEGER', 'uploaded': 'INTEGER'}
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-F', dest='fields', default='_tracker,ratio,uploaded,downloaded,latest_activity,name')
 parser.add_argument('-f', dest='where', default='1')
@@ -15,9 +18,6 @@ args.fields = args.fields.split(',')
 
 torrents = []
 torrent = None
-
-db = sqlite3.connect(':memory:')
-dbc = db.cursor()
 
 lines = sys.stdin.readlines()
 for line in lines:
@@ -36,6 +36,10 @@ for line in lines:
 			v = 9999
 		if k in ['date_added', 'date_finished', 'date_started', 'latest_activity']:
 			v = datetime.datetime.strptime(v, "%a %b %d %H:%M:%S %Y")
+		elif k in ['downloaded', 'uploaded']:
+			if isinstance(v, str):
+				v = v.split(' ', 1)
+				v = int(float(v[0]) * (1024**SIZE_NAMES.index(v[1])))
 		elif k in ['ratio']:
 			v = float(v)
 		elif k in ['magnet']:
@@ -46,13 +50,33 @@ for line in lines:
 		torrent[k] = v
 
 def coldefs(names):
-	return ','.join(['"%s" TEXT' % (name,) for name in names])
+	return ','.join(['"%s" %s' % (name, DB_TYPES.get(name, 'TEXT')) for name in names])
 
 def flatten(l):
 	return [item for sublist in l for item in sublist]
 
 def quote_join_list(names):
 	return ','.join([('"%s"' % n) for n in names])
+
+def format_size(val):
+	for name in SIZE_NAMES:
+		if val < 1024:
+			break
+		val /= 1024
+	return "%.2f %s" % (val/1.024, name)
+
+def format_row(row):
+	data = []
+	for k in row.keys():
+		v = row[k]
+		if k in ['uploaded', 'downloaded']:
+			v = format_size(float(v))
+		data.append(v)
+	return data
+
+db = sqlite3.connect(':memory:')
+db.row_factory = sqlite3.Row
+dbc = db.cursor()
 
 fields = set(flatten([t.keys() for t in torrents]))
 create_table = "CREATE TABLE torrents (%s)" % coldefs(fields)
@@ -65,5 +89,5 @@ for t in torrents:
 
 query = 'SELECT %s FROM torrents WHERE %s' % (quote_join_list(args.fields), args.where)
 for row in dbc.execute(query):
-	print(*[x for x in row])
+	print(*[x for x in format_row(row)])
 
