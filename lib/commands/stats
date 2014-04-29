@@ -1,0 +1,12 @@
+. "$INSTALLDIR"/lib/remote
+INSTANCE="$1"; shift || true
+if [ -z "$INSTANCE" ]; then
+  echo "usage: tdm stats INSTANCE [stats-options]"
+  exit 1
+fi
+PFX="$INSTANCE_PREFIX"/"$INSTANCE"
+cd -- "$PFX"
+
+ensure_rpc_password
+remote -tall -i | python "$INSTALLDIR"/lib/foreign/stats.py "$@"
+exit $?

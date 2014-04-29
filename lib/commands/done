@@ -4,5 +4,5 @@ if [ -z "$INSTANCE" ]; then
   exit 1
 fi
 
-echo $@ >> "$INSTANCE_PREFIX"/$INSTANCE/log
+echo $(date) $@ >> "$INSTANCE_PREFIX"/$INSTANCE/log
 exit 0

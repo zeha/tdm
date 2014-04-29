@@ -1,4 +1,4 @@
-remote() {
+ensure_rpc_password() {
   . "$INSTANCE_PREFIX"/"$INSTANCE"/config/tdm.sh
   if [ -z "$RPC_PASSWORD_CLEAR" ]; then
     echo -n "Enter RPC password: "
@@ -7,6 +7,11 @@ remote() {
     stty echo
     echo
   fi
+  export RPC_PASSWORD_CLEAR="$RPC_PASSWORD_CLEAR"
   export TR_AUTH="$RPC_USERNAME:$RPC_PASSWORD_CLEAR"
-  exec transmission-remote "http://localhost:$RPC_PORT/transmission" -ne "$@"
+}
+
+remote() {
+  ensure_rpc_password
+  transmission-remote "http://localhost:$RPC_PORT/transmission" -ne "$@"
 }
