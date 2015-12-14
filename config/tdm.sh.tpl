@@ -9,3 +9,6 @@ RPC_BIND_IP=127.0.0.1
 # Where instances go.
 INSTANCE_PREFIX=~/bt
 
+#NGINX=yes
+#NGINX_DIR=~/.nginx/conf.d/000-default-server.d
+#NGINX_RELOAD="/usr/sbin/nginx -s reload -c ~/.nginx/nginx.conf"

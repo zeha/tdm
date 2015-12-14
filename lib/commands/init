@@ -17,8 +17,12 @@ mkdir "$PFX"/files
 mkdir "$PFX"/watch
 chmod 700 "$PFX"/config
 
-openssl req -new -x509 -days 365 -nodes -config /usr/share/doc/stunnel4/examples/stunnel.cnf -out "$PFX/config/stunnel.pem" -keyout "$PFX/config/stunnel.pem"
-openssl gendh 512 >> "$PFX/config/stunnel.pem"
+if [ -z "$NGINX" ]; then
+  openssl req -new -x509 -days 365 -nodes -config /usr/share/doc/stunnel4/examples/stunnel.cnf -out "$PFX/config/stunnel.pem" -keyout "$PFX/config/stunnel.pem"
+  openssl gendh 512 >> "$PFX/config/stunnel.pem"
+else
+  touch "$PFX"/config/nginx.conf
+fi
 
 CFG="$PFX"/config/tdm.sh
 

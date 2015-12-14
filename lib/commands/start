@@ -17,8 +17,22 @@ fi
 mkconfig
 
 if [ ! "$RPC_SSL" = "no" ]; then
-  stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
-    -p "$PFX"/config/stunnel.pem -d $RPC_BIND_IP:$RPC_PORT -r $RPC_PORT
+  if [ -z "$NGINX" ]; then
+    stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
+      -p "$PFX"/config/stunnel.pem -d $RPC_BIND_IP:$RPC_PORT -r $RPC_PORT
+  else
+    cat <<EOF >"$PFX"/config/nginx.conf
+location /tdm$RPC_PORT/ {
+  rewrite / /tdm$RPC_PORT/transmission/web/ redirect;
+}
+location /tdm$RPC_PORT/transmission/web/ {
+  proxy_pass http://$RPC_BIND_IP:$RPC_PORT/transmission/web/;
+}
+EOF
+    rm -f "$NGINX_DIR"/"$INSTANCE".conf
+    ln -s "$PFX"/config/nginx.conf "$NGINX_DIR"/"$INSTANCE".conf
+    $NGINX_RELOAD || true
+  fi
 fi
 
 # Important to have $PFX on this line, so we can find the process
