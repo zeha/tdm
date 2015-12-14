@@ -23,4 +23,4 @@ fi
 
 # Important to have $PFX on this line, so we can find the process
 # later on.
-exec transmission-daemon -g "$PFX"/config -x "$PFX"/.pid
+exec transmission-daemon -g "$PFX"/config -x "$PFX"/.pid -e "$PFX"/log
