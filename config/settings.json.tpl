@@ -52,7 +52,7 @@
     "rpc-whitelist-enabled": true, 
     "scrape-paused-torrents-enabled": true, 
     "script-torrent-done-enabled": true, 
-    "script-torrent-done-filename": "@BINDIR@/tddone @INSTANCE@", 
+    "script-torrent-done-filename": "@PFX@/.done", 
     "seed-queue-enabled": false, 
     "seed-queue-size": 10, 
     "speed-limit-down": 1, 

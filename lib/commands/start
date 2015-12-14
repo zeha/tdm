@@ -35,6 +35,14 @@ EOF
   fi
 fi
 
+cat <<EOF >"$PFX"/.done
+#!/bin/sh
+export PFX="$PFX"
+export INSTANCE="$INSTANCE"
+exec "$BINDIR"/tddone "$INSTANCE" "\$@"
+EOF
+chmod +x "$PFX"/.done
+
 # Important to have $PFX on this line, so we can find the process
 # later on.
-exec transmission-daemon -g "$PFX"/config -x "$PFX"/.pid -e "$PFX"/log
+exec env - PATH=$PATH HOME=$HOME transmission-daemon -g "$PFX"/config -x "$PFX"/.pid -e "$PFX"/log
