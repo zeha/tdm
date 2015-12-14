@@ -9,14 +9,16 @@ cd -- "$PFX"
 
 tdm stop "$INSTANCE" 2>/dev/null || true
 
-PUBIP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
+if [ -z "$RPC_BIND_IP" ]; then
+  RPC_BIND_IP=$(ip route get 8.8.8.8 | awk '{print $7}' | tr -d ' \n')
+fi
 . "$PFX"/config/tdm.sh
 
 mkconfig
 
 if [ ! "$RPC_SSL" = "no" ]; then
   stunnel -o "$PFX"/config/.stunnel.log -P "$PFX"/config/.stunnel.pid \
-    -p "$PFX"/config/stunnel.pem -d $PUBIP:$RPC_PORT -r $RPC_PORT
+    -p "$PFX"/config/stunnel.pem -d $RPC_BIND_IP:$RPC_PORT -r $RPC_PORT
 fi
 
 # Important to have $PFX on this line, so we can find the process

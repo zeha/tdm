@@ -42,7 +42,7 @@
     "ratio-limit-enabled": false, 
     "rename-partial-files": false, 
     "rpc-authentication-required": true, 
-    "rpc-bind-address": "127.0.0.1", 
+    "rpc-bind-address": "@RPC_BIND_IP@", 
     "rpc-enabled": true, 
     "rpc-password": "@RPC_PASSWORD@", 
     "rpc-port": @RPC_PORT@, 
