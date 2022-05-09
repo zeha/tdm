@@ -25,8 +25,8 @@ if [ ! "$RPC_SSL" = "no" ]; then
 location /tdm$RPC_PORT/ {
   rewrite / /tdm$RPC_PORT/transmission/web/ redirect;
 }
-location /tdm$RPC_PORT/transmission/web/ {
-  proxy_pass http://$RPC_BIND_IP:$RPC_PORT/transmission/web/;
+location /tdm$RPC_PORT/transmission/ {
+  proxy_pass http://$RPC_BIND_IP:$RPC_PORT/transmission/;
 }
 EOF
     rm -f "$NGINX_DIR"/"$INSTANCE".conf
