@@ -1,0 +1,5 @@
+#!/bin/bash
+SOURCE="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+if [[ -e "$SOURCE" ]]; then
+  cp -al "$SOURCE" ~/to_copy
+fi
