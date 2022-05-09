@@ -1,0 +1,18 @@
+. "$LIBDIR"/mkconfig
+INSTANCE="$1"; shift || true
+if [ -z "$INSTANCE" ]; then
+  echo "usage: tdm start-if-needed INSTANCE"
+  exit 1
+fi
+
+PFX="$INSTANCE_PREFIX"/$INSTANCE
+if [ ! -d "$PFX" ]; then
+  echo "The instance $INSTANCE does not exist."
+  exit 1
+fi
+. "$PFX"/config/tdm.sh
+echo "Instance $INSTANCE: peer port $PEER_PORT, RPC: http://localhost:$RPC_PORT/"
+PIDS=$(pgrep -u $USER -f "$PFX"/config || true)
+if [ -z "${PIDS}" ]; then
+  tdm start "$INSTANCE" 2>/dev/null || true
+fi
